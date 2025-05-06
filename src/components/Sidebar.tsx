@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Timer, ListTodo, Note, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Timer, ListTodo, Pencil, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NavItemProps {
@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
 
   const navItems = [
     { id: 'pomodoro', label: 'Pomodoro', icon: <Timer size={20} /> },
-    { id: 'notes', label: 'Notes', icon: <Note size={20} /> },
+    { id: 'notes', label: 'Notes', icon: <Pencil size={20} /> },
     { id: 'todos', label: 'To-Do List', icon: <ListTodo size={20} /> },
     { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
   ];
