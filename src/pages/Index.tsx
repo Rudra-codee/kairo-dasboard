@@ -5,6 +5,7 @@ import PomodoroTimer from '@/components/PomodoroTimer';
 import Notes from '@/components/Notes';
 import TodoList from '@/components/TodoList';
 import Settings from '@/components/Settings';
+import ProjectManagement from '@/components/ProjectManagement';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const Index = () => {
@@ -38,6 +39,7 @@ const Index = () => {
             </div>
 
             {activeTab === 'pomodoro' && <PomodoroTimer />}
+            {activeTab === 'projects' && <ProjectManagement />}
             {activeTab === 'notes' && <Notes />}
             {activeTab === 'todos' && <TodoList />}
             {activeTab === 'settings' && <Settings />}
