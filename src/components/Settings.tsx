@@ -1,11 +1,10 @@
 
-import React from 'react';
-import { Moon, Sun } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Moon, Sun, Palette } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Settings: React.FC = () => {
   const { theme, setTheme, colorTheme, setColorTheme } = useTheme();
@@ -15,7 +14,48 @@ const Settings: React.FC = () => {
     { id: 'blue', label: 'Blue', color: '#33C3F0' },
     { id: 'pink', label: 'Pink', color: '#F06292' },
     { id: 'green', label: 'Green', color: '#66BB6A' },
+    { id: 'orange', label: 'Orange', color: '#F97316' },
+    { id: 'red', label: 'Red', color: '#ea384c' },
   ];
+
+  // Update CSS variables when color theme changes
+  useEffect(() => {
+    const root = document.documentElement;
+    
+    // Apply the color theme to the CSS variables
+    switch (colorTheme) {
+      case 'purple':
+        root.style.setProperty('--primary', '255 70% 75%');
+        root.style.setProperty('--sidebar-primary', '255 70% 75%');
+        root.style.setProperty('--ring', '255 70% 75%');
+        break;
+      case 'blue':
+        root.style.setProperty('--primary', '199 89% 52%');
+        root.style.setProperty('--sidebar-primary', '199 89% 52%');
+        root.style.setProperty('--ring', '199 89% 52%');
+        break;
+      case 'pink':
+        root.style.setProperty('--primary', '336 80% 58%');
+        root.style.setProperty('--sidebar-primary', '336 80% 58%');
+        root.style.setProperty('--ring', '336 80% 58%');
+        break;
+      case 'green':
+        root.style.setProperty('--primary', '122 40% 56%');
+        root.style.setProperty('--sidebar-primary', '122 40% 56%');
+        root.style.setProperty('--ring', '122 40% 56%');
+        break;
+      case 'orange':
+        root.style.setProperty('--primary', '24 95% 53%');
+        root.style.setProperty('--sidebar-primary', '24 95% 53%');
+        root.style.setProperty('--ring', '24 95% 53%');
+        break;
+      case 'red':
+        root.style.setProperty('--primary', '354 83% 57%');
+        root.style.setProperty('--sidebar-primary', '354 83% 57%');
+        root.style.setProperty('--ring', '354 83% 57%');
+        break;
+    }
+  }, [colorTheme]);
 
   return (
     <div className="w-full max-w-md mx-auto animate-fade-in">
@@ -51,13 +91,16 @@ const Settings: React.FC = () => {
 
           {/* Color Theme Selection */}
           <div className="space-y-3">
-            <Label>Accent Color</Label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="flex items-center space-x-2">
+              <Palette className="h-4 w-4" />
+              <Label>Accent Color</Label>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
               {colorThemes.map((t) => (
                 <div 
                   key={t.id}
                   className={`
-                    h-10 rounded-md cursor-pointer flex items-center justify-center transition-all
+                    h-12 rounded-md cursor-pointer flex items-center justify-center transition-all
                     ${colorTheme === t.id ? 'ring-2 ring-offset-2 ring-ring' : ''}
                   `}
                   style={{ backgroundColor: t.color }}
@@ -71,7 +114,7 @@ const Settings: React.FC = () => {
 
           <div className="pt-2">
             <p className="text-sm text-muted-foreground">
-              Theme preferences are automatically saved to your browser.
+              Theme preferences and timer settings are automatically saved to your browser.
             </p>
           </div>
         </CardContent>
