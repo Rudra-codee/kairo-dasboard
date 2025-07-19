@@ -1,8 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Timer, CheckSquare, Folder, FileText, Palette, ArrowRight, Play, Users, Star } from "lucide-react";
 
 const Landing = () => {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
   const features = [
     {
       icon: Timer,
@@ -37,18 +43,19 @@ const Landing = () => {
     { step: "3", title: "Track Progress", description: "Use timers and boards to stay productive" }
   ];
 
-  const testimonials = [
-    {
-      quote: "Dealboard transformed how I manage my daily tasks. The Pomodoro timer keeps me focused!",
-      author: "Sarah Chen",
-      role: "Product Designer"
-    },
-    {
-      quote: "Simple, elegant, and powerful. Everything I need for productivity in one place.",
-      author: "Mike Rodriguez",
-      role: "Software Engineer"
-    }
-  ];
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Note: Connect to Supabase for authentication
+    console.log("Login submitted");
+    setIsLoginOpen(false);
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Note: Connect to Supabase for authentication
+    console.log("Signup submitted");
+    setIsSignupOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,13 +67,21 @@ const Landing = () => {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <Timer className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">Dealboard</span>
+              <span className="text-xl font-bold text-foreground">Kairo</span>
             </div>
             <div className="flex items-center space-x-4">
               <Button variant="ghost">Features</Button>
               <Button variant="ghost">Pricing</Button>
-              <Button variant="outline">Login</Button>
-              <Button>Sign Up</Button>
+              <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Login</Button>
+                </DialogTrigger>
+              </Dialog>
+              <Dialog open={isSignupOpen} onOpenChange={setIsSignupOpen}>
+                <DialogTrigger asChild>
+                  <Button>Sign Up</Button>
+                </DialogTrigger>
+              </Dialog>
             </div>
           </div>
         </div>
@@ -78,17 +93,21 @@ const Landing = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl font-bold text-foreground mb-6 leading-tight">
-                Boost Productivity with <span className="text-primary">Dealboard</span>
+                Boost Productivity with <span className="text-primary">Kairo</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
                 Manage tasks, projects, and notes in one place. Stay focused with Pomodoro timers and achieve your goals faster.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8">
-                  Get Started Free
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8">
+                <Dialog open={isSignupOpen} onOpenChange={setIsSignupOpen}>
+                  <DialogTrigger asChild>
+                    <Button size="lg" className="text-lg px-8">
+                      Get Started Free
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
+                <Button variant="outline" size="lg" className="text-lg px-8" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>
                   <Play className="mr-2 w-5 h-5" />
                   Learn More
                 </Button>
@@ -134,7 +153,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/50">
+      <section id="features" className="py-20 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">Everything You Need to Stay Productive</h2>
@@ -175,40 +194,19 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-muted/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-foreground mb-4">What Our Users Say</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                  ))}
-                </div>
-                <p className="text-lg text-foreground mb-4">"{testimonial.quote}"</p>
-                <div>
-                  <p className="font-semibold">{testimonial.author}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-foreground mb-4">Ready to Boost Your Productivity?</h2>
-          <p className="text-xl text-muted-foreground mb-8">Join thousands of users who are already getting more done with Dealboard.</p>
-          <Button size="lg" className="text-lg px-8">
-            Start for Free
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+          <p className="text-xl text-muted-foreground mb-8">Join thousands of users who are already getting more done with Kairo.</p>
+          <Dialog open={isSignupOpen} onOpenChange={setIsSignupOpen}>
+            <DialogTrigger asChild>
+              <Button size="lg" className="text-lg px-8">
+                Start for Free
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </DialogTrigger>
+          </Dialog>
         </div>
       </section>
 
@@ -221,7 +219,7 @@ const Landing = () => {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <Timer className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold">Dealboard</span>
+                <span className="text-xl font-bold">Kairo</span>
               </div>
               <p className="text-muted-foreground">The productivity app that helps you focus and get things done.</p>
             </div>
@@ -252,10 +250,95 @@ const Landing = () => {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 Dealboard. All rights reserved.</p>
+            <p>&copy; 2024 Kairo. All rights reserved.</p>
           </div>
         </div>
       </footer>
+
+      {/* Login Dialog */}
+      <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Welcome back to Kairo</DialogTitle>
+            <DialogDescription>
+              Enter your credentials to access your productivity dashboard.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="login-email">Email</Label>
+              <Input id="login-email" type="email" placeholder="Enter your email" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="login-password">Password</Label>
+              <Input id="login-password" type="password" placeholder="Enter your password" required />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Button type="submit" className="w-full">Sign In</Button>
+              <Button type="button" variant="link" className="text-sm">
+                Forgot your password?
+              </Button>
+            </div>
+            <div className="text-center text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <button
+                type="button"
+                className="text-primary hover:underline"
+                onClick={() => {
+                  setIsLoginOpen(false);
+                  setIsSignupOpen(true);
+                }}
+              >
+                Sign up
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Signup Dialog */}
+      <Dialog open={isSignupOpen} onOpenChange={setIsSignupOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Join Kairo</DialogTitle>
+            <DialogDescription>
+              Create your account and start boosting your productivity today.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSignup} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="signup-name">Full Name</Label>
+              <Input id="signup-name" type="text" placeholder="Enter your full name" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="signup-email">Email</Label>
+              <Input id="signup-email" type="email" placeholder="Enter your email" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="signup-password">Password</Label>
+              <Input id="signup-password" type="password" placeholder="Create a password" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="signup-confirm">Confirm Password</Label>
+              <Input id="signup-confirm" type="password" placeholder="Confirm your password" required />
+            </div>
+            <Button type="submit" className="w-full">Create Account</Button>
+            <div className="text-center text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <button
+                type="button"
+                className="text-primary hover:underline"
+                onClick={() => {
+                  setIsSignupOpen(false);
+                  setIsLoginOpen(true);
+                }}
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
