@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -9,6 +10,7 @@ import { Timer, CheckSquare, Folder, FileText, Palette, ArrowRight, Play, Users,
 const Landing = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const navigate = useNavigate();
   const features = [
     {
       icon: Timer,
@@ -48,6 +50,7 @@ const Landing = () => {
     // Note: Connect to Supabase for authentication
     console.log("Login submitted");
     setIsLoginOpen(false);
+    navigate('/app');
   };
 
   const handleSignup = (e: React.FormEvent) => {
@@ -55,6 +58,7 @@ const Landing = () => {
     // Note: Connect to Supabase for authentication
     console.log("Signup submitted");
     setIsSignupOpen(false);
+    navigate('/app');
   };
 
   return (
@@ -124,29 +128,20 @@ const Landing = () => {
               </div>
             </div>
             <div className="relative">
-              <Card className="p-8 shadow-2xl">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold">Today's Focus</h3>
-                    <div className="text-2xl font-mono text-primary">25:00</div>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-4 h-4 rounded-full bg-primary"></div>
-                      <span>Complete project proposal</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-4 h-4 rounded-full border-2 border-muted"></div>
-                      <span className="text-muted-foreground">Review team feedback</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-4 h-4 rounded-full border-2 border-muted"></div>
-                      <span className="text-muted-foreground">Plan next sprint</span>
-                    </div>
-                  </div>
-                  <Button className="w-full">Start Pomodoro</Button>
+              <div className="flex justify-center items-center">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/61224843-c63c-4918-a1c8-2a28b8ad6b42.png" 
+                    alt="Classic Clock" 
+                    className="w-80 h-80 drop-shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out"
+                    style={{
+                      filter: 'drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15)) drop-shadow(0 10px 10px rgba(0, 0, 0, 0.1))',
+                      transform: 'perspective(1000px) rotateX(5deg) rotateY(-5deg)'
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full pointer-events-none"></div>
                 </div>
-              </Card>
+              </div>
             </div>
           </div>
         </div>
