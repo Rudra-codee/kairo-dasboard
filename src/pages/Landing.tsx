@@ -131,8 +131,8 @@ const Landing = () => {
               <div className="flex justify-center items-center">
                 <div className="relative">
                   <img 
-                    src="/lovable-uploads/61224843-c63c-4918-a1c8-2a28b8ad6b42.png" 
-                    alt="Classic Clock" 
+                    src="/lovable-uploads/3bce1470-abda-4e75-a67e-3f5b91debed1.png" 
+                    alt="Pomodoro Timer"
                     className="w-80 h-80 drop-shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out"
                     style={{
                       filter: 'drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15)) drop-shadow(0 10px 10px rgba(0, 0, 0, 0.1))',
